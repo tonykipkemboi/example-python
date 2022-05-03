@@ -13,37 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PYTHON_BIN=${PYTHON_BIN:-python3}
-
-# Protobuf definitions (default location assume proto definitions are siblings of this project)
-PROTO=${1:-"$ROOT/../proto"}
-PROTO_ETHEREUM=${2:-"$ROOT/../proto-ethereum"}
-
-function main() {
-  set -e
-  pushd "$ROOT" &> /dev/null
-
-  generate "dfuse/bstream/v1/bstream.proto"
-  generate "dfuse/ethereum/codec/v1/codec.proto"
-
-  echo "generate.sh - `date` - `whoami`" > $ROOT/last_generate_proto.txt
-  echo "dfuse-io/proto revision: `GIT_DIR=$PROTO/.git git rev-parse HEAD`" >> $ROOT/last_generate_proto.txt
-  echo "dfuse-io/proto-ethereum revision: `GIT_DIR=$PROTO_ETHEREUM/.git git rev-parse HEAD`" >> $ROOT/last_generate_proto.txt
-}
-
-# usage:
-# - generate <protoPath>
-# - generate <protoBasePath/> [<file.proto> ...]
-function generate() {
-    base=""
-    if [[ "$#" -gt 1 ]]; then
-      base="$1"; shift
-    fi
-
-    for file in "$@"; do
-      $PYTHON_BIN -m grpc_tools.protoc -I$PROTO -I$PROTO_ETHEREUM --python_out=$ROOT --grpc_python_out=$ROOT $base$file
-    done
-}
-
-main "$@"
+python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/substreams.proto
+python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/clock.proto
+python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/manifest.proto
+python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/ethereum/type/v1/type.proto

@@ -1,3 +1,0 @@
-generate.sh - Wed Mar 24 21:08:55 EDT 2021 - maoueh
-dfuse-io/proto revision: 4bca1300d6e75a04724925ef2c9341dfe50c5263
-dfuse-io/proto-ethereum revision: 3c4dc4179275abce8825cb07d4aab008d06d5df5

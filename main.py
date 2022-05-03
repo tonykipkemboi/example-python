@@ -1,94 +1,49 @@
+#!/usr/bin/env python3
+
 import http.client
-import json
-import ssl
+#import json
+#import ssl
 import sys
+import os
 import grpc
 
-from dfuse.bstream.v1 import bstream_pb2_grpc
-from dfuse.bstream.v1.bstream_pb2 import BlocksRequestV2, STEP_IRREVERSIBLE, BLOCK_DETAILS_LIGHT
-from dfuse.ethereum.codec.v1 import codec_pb2
-from google.protobuf.json_format import MessageToJson
+from sf.substreams.v1 import substreams_pb2_grpc
+from sf.substreams.v1.substreams_pb2 import Request, Response, STEP_IRREVERSIBLE
+from sf.substreams.v1.manifest_pb2 import Manifest
+import sf.ethereum.type.v1.type_pb2 as eth_pb2
+#from google.protobuf.json_format import MessageToJson
 
+jwt_token = os.getenv("SUBSTREAMS_API_TOKEN")
+if not jwt_token: raise Error("set SUBSTREAMS_API_TOKEN")
+endpoint = "bsc-dev.streamingfast.io:443"
+manifest_yaml_pb = "../substreams-playground/pcs-rust/substreams.yaml.pb"
+output_modules = ["block_to_pairs", "pairs"]
+start_block = 6_810_706
+end_block = 6_810_710
 
-def token_for_api_key(apiKey):
-    # Needs to be cached since this API is rate limited, the returned token is valid for 24h
-    connection = http.client.HTTPSConnection("auth.dfuse.io")
-    connection.request(
-        'POST',
-        '/v1/auth/issue',
-        json.dumps({"api_key": apiKey}),
-        {'Content-type': 'application/json'},
+def substreams_service():
+    credentials = grpc.composite_channel_credentials(
+        grpc.ssl_channel_credentials(),
+        grpc.access_token_call_credentials(jwt_token),
     )
-    response = connection.getresponse()
-
-    if response.status != 200:
-        raise Exception(
-            f" Status: {response.status} reason: {response.reason}")
-
-    token = json.loads(response.read().decode())['token']
-    connection.close()
-
-    return token
-
-
-def blockstream_v2():
-    credentials = grpc.access_token_call_credentials(
-        token_for_api_key(sys.argv[1]))
-    channel = grpc.secure_channel(
-        'bsc.streamingfast.io:443',
-        credentials=grpc.composite_channel_credentials(grpc.ssl_channel_credentials(),
-                                                       credentials))
-    return bstream_pb2_grpc.BlockStreamV2Stub(channel)
-
-
-def block_stats(block):
-    call_count = 0
-    log_count = 0
-    for trx_trace in block.transaction_traces:
-        for call in trx_trace.calls:
-            log_count += len(call.logs)
-
-        call_count += len(trx_trace.calls)
-
-    return len(block.transaction_traces), call_count, log_count
-
+    channel = grpc.secure_channel(endpoint, credentials=credentials)
+    return substreams_pb2_grpc.StreamStub(channel)
 
 def main():
-    if len(sys.argv) <= 1:
-        print("Error: Wrong number of arguments")
-        print()
-        print("usage: python3 main.py <apiKey> --full")
-        exit(1)
+    with open(manifest_yaml_pb, 'rb') as f:
+        manifest = Manifest()
+        manifest.ParseFromString(f.read())
 
-    blockstream = blockstream_v2()
-    stream = blockstream.Blocks(BlocksRequestV2(
-        start_block_num=5_975_000,
-        stop_block_num=5_975_010,
-
-        # This could be used to filter the block so it contains only transactions you are intersted in
-        # See https://github.com/streamingfast/streamingfast-client#query-language for details
-        # include_filter_expr="to == '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'"
-
-        # Shows only block that are deemed "irreversible" (200 confirmations hard-coded for now)
-        # To be live and deal with forks, use [STEP_NEW, STEP_UNDO]
+    service = substreams_service()
+    stream = service.Blocks(Request(
+        start_block_num=start_block,
+        stop_block_num=end_block,
         fork_steps=[STEP_IRREVERSIBLE],
+        manifest=manifest,
+        output_modules=output_modules,
     ))
 
-    print_full = len(sys.argv) > 2 and sys.argv[2] == "--full"
-
     for response in stream:
-        block = codec_pb2.Block()
-        succeed = response.block.Unpack(block)
-        if succeed != True:
-            raise Exception(
-                "Invalid target type, field to unpack is of type {} but tried to unpack it into type {}".format(response.block.TypeName(), block.DESCRIPTOR.full_name))
-
-        trx_count, call_count, log_count = block_stats(block)
-
-        print(
-            "Block #{} ({}) - {} Transactions ({} calls, {} logs)".format(block.number, block.hash.hex(), trx_count, call_count, log_count))
-        if print_full:
-            print(MessageToJson(block))
-
+        print(response)
 
 main()
