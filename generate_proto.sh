@@ -13,7 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/substreams.proto
-python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/clock.proto
-python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/substreams/v1/manifest.proto
-python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. proto/sf/ethereum/type/v1/type.proto
+curl -L -O https://github.com/streamingfast/substreams-playground/releases/download/v0.5.0/pcs-v0.5.0.spkg
+PKG=./pcs-v0.5.0.spkg
+
+CMD="python3 -m grpc_tools.protoc --descriptor_set_in=$PKG --python_out=. --grpc_python_out=."
+
+$CMD sf/substreams/v1/substreams.proto
+$CMD sf/substreams/v1/package.proto
+$CMD sf/substreams/v1/modules.proto
+$CMD sf/substreams/v1/clock.proto
+$CMD pcs/v1/pcs.proto
+$CMD codec_eth.proto

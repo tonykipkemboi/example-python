@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='sf.substreams.v1',
   syntax='proto3',
   serialized_options=_b('ZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreams'),
-  serialized_pb=_b('\n\x1csf/substreams/v1/clock.proto\x12\x10sf.substreams.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"R\n\x05\x43lock\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x04\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampBFZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreamsb\x06proto3')
+  serialized_pb=_b('\n\x1csf/substreams/v1/clock.proto\x12\x10sf.substreams.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"i\n\x05\x43lock\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n\x06number\x18\x02 \x01(\x04R\x06number\x12\x38\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\ttimestampBFZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreamsb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -41,21 +41,21 @@ _CLOCK = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='id', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='number', full_name='sf.substreams.v1.Clock.number', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='number', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='sf.substreams.v1.Clock.timestamp', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='timestamp', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -69,7 +69,7 @@ _CLOCK = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=83,
-  serialized_end=165,
+  serialized_end=188,
 )
 
 _CLOCK.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP

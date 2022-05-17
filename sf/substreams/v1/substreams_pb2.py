@@ -16,7 +16,7 @@ _sym_db = _symbol_database.Default()
 
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
-from sf.substreams.v1 import manifest_pb2 as sf_dot_substreams_dot_v1_dot_manifest__pb2
+from sf.substreams.v1 import modules_pb2 as sf_dot_substreams_dot_v1_dot_modules__pb2
 from sf.substreams.v1 import clock_pb2 as sf_dot_substreams_dot_v1_dot_clock__pb2
 
 
@@ -25,9 +25,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='sf.substreams.v1',
   syntax='proto3',
   serialized_options=_b('ZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreams'),
-  serialized_pb=_b('\n!sf/substreams/v1/substreams.proto\x12\x10sf.substreams.v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1fsf/substreams/v1/manifest.proto\x1a\x1csf/substreams/v1/clock.proto\"\x95\x02\n\x07Request\x12\x17\n\x0fstart_block_num\x18\x01 \x01(\x03\x12\x14\n\x0cstart_cursor\x18\x02 \x01(\t\x12\x16\n\x0estop_block_num\x18\x03 \x01(\x04\x12.\n\nfork_steps\x18\x04 \x03(\x0e\x32\x1a.sf.substreams.v1.ForkStep\x12!\n\x19irreversibility_condition\x18\x05 \x01(\t\x12,\n\x08manifest\x18\x06 \x01(\x0b\x32\x1a.sf.substreams.v1.Manifest\x12\x16\n\x0eoutput_modules\x18\x07 \x03(\t\x12*\n\"initial_store_snapshot_for_modules\x18\x08 \x03(\t\"\x87\x02\n\x08Response\x12\x35\n\x08progress\x18\x01 \x01(\x0b\x32!.sf.substreams.v1.ModulesProgressH\x00\x12>\n\rsnapshot_data\x18\x02 \x01(\x0b\x32%.sf.substreams.v1.InitialSnapshotDataH\x00\x12\x46\n\x11snapshot_complete\x18\x03 \x01(\x0b\x32).sf.substreams.v1.InitialSnapshotCompleteH\x00\x12\x31\n\x04\x64\x61ta\x18\x04 \x01(\x0b\x32!.sf.substreams.v1.BlockScopedDataH\x00\x42\t\n\x07message\")\n\x17InitialSnapshotComplete\x12\x0e\n\x06\x63ursor\x18\x01 \x01(\t\"\x80\x01\n\x13InitialSnapshotData\x12\x13\n\x0bmodule_name\x18\x01 \x01(\t\x12-\n\x06\x64\x65ltas\x18\x02 \x01(\x0b\x32\x1d.sf.substreams.v1.StoreDeltas\x12\x11\n\tsent_keys\x18\x04 \x01(\x04\x12\x12\n\ntotal_keys\x18\x03 \x01(\x04\"\xa4\x01\n\x0f\x42lockScopedData\x12/\n\x07outputs\x18\x01 \x03(\x0b\x32\x1e.sf.substreams.v1.ModuleOutput\x12&\n\x05\x63lock\x18\x03 \x01(\x0b\x32\x17.sf.substreams.v1.Clock\x12(\n\x04step\x18\x06 \x01(\x0e\x32\x1a.sf.substreams.v1.ForkStep\x12\x0e\n\x06\x63ursor\x18\n \x01(\t\"\x95\x01\n\x0cModuleOutput\x12\x0c\n\x04name\x18\x01 \x01(\t\x12*\n\nmap_output\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00\x12\x35\n\x0cstore_deltas\x18\x03 \x01(\x0b\x32\x1d.sf.substreams.v1.StoreDeltasH\x00\x12\x0c\n\x04logs\x18\x04 \x03(\tB\x06\n\x04\x64\x61ta\"D\n\x0fModulesProgress\x12\x31\n\x07modules\x18\x01 \x03(\x0b\x32 .sf.substreams.v1.ModuleProgress\"\xb5\x01\n\x0eModuleProgress\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x36\n\x10processed_ranges\x18\x02 \x03(\x0b\x32\x1c.sf.substreams.v1.BlockRange\x12\x18\n\x10total_bytes_read\x18\x03 \x01(\x04\x12\x1b\n\x13total_bytes_written\x18\x04 \x01(\x04\x12\x0e\n\x06\x66\x61iled\x18\x07 \x01(\x08\x12\x16\n\x0e\x66\x61ilure_reason\x18\x08 \x01(\t\"4\n\nBlockRange\x12\x13\n\x0bstart_block\x18\x01 \x01(\x04\x12\x11\n\tend_block\x18\x02 \x01(\x04\";\n\x0bStoreDeltas\x12,\n\x06\x64\x65ltas\x18\x01 \x03(\x0b\x32\x1c.sf.substreams.v1.StoreDelta\"\xc7\x01\n\nStoreDelta\x12\x39\n\toperation\x18\x01 \x01(\x0e\x32&.sf.substreams.v1.StoreDelta.Operation\x12\x0f\n\x07ordinal\x18\x02 \x01(\x04\x12\x0b\n\x03key\x18\x03 \x01(\t\x12\x11\n\told_value\x18\x04 \x01(\x0c\x12\x11\n\tnew_value\x18\x05 \x01(\x0c\":\n\tOperation\x12\t\n\x05UNSET\x10\x00\x12\n\n\x06\x43REATE\x10\x01\x12\n\n\x06UPDATE\x10\x02\x12\n\n\x06\x44\x45LETE\x10\x03\"\x81\x01\n\x06Output\x12\x11\n\tblock_num\x18\x01 \x01(\x04\x12\x10\n\x08\x62lock_id\x18\x02 \x01(\t\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12#\n\x05value\x18\n \x01(\x0b\x32\x14.google.protobuf.Any*\\\n\x08\x46orkStep\x12\x10\n\x0cSTEP_UNKNOWN\x10\x00\x12\x0c\n\x08STEP_NEW\x10\x01\x12\r\n\tSTEP_UNDO\x10\x02\x12\x15\n\x11STEP_IRREVERSIBLE\x10\x04\"\x04\x08\x03\x10\x03\"\x04\x08\x05\x10\x05\x32K\n\x06Stream\x12\x41\n\x06\x42locks\x12\x19.sf.substreams.v1.Request\x1a\x1a.sf.substreams.v1.Response0\x01\x42\x46ZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreamsb\x06proto3')
+  serialized_pb=_b('\n!sf/substreams/v1/substreams.proto\x12\x10sf.substreams.v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1esf/substreams/v1/modules.proto\x1a\x1csf/substreams/v1/clock.proto\"\x9a\x03\n\x07Request\x12&\n\x0fstart_block_num\x18\x01 \x01(\x03R\rstartBlockNum\x12!\n\x0cstart_cursor\x18\x02 \x01(\tR\x0bstartCursor\x12$\n\x0estop_block_num\x18\x03 \x01(\x04R\x0cstopBlockNum\x12\x39\n\nfork_steps\x18\x04 \x03(\x0e\x32\x1a.sf.substreams.v1.ForkStepR\tforkSteps\x12;\n\x19irreversibility_condition\x18\x05 \x01(\tR\x18irreversibilityCondition\x12\x33\n\x07modules\x18\x06 \x01(\x0b\x32\x19.sf.substreams.v1.ModulesR\x07modules\x12%\n\x0eoutput_modules\x18\x07 \x03(\tR\routputModules\x12J\n\"initial_store_snapshot_for_modules\x18\x08 \x03(\tR\x1einitialStoreSnapshotForModules\"\xb7\x02\n\x08Response\x12?\n\x08progress\x18\x01 \x01(\x0b\x32!.sf.substreams.v1.ModulesProgressH\x00R\x08progress\x12L\n\rsnapshot_data\x18\x02 \x01(\x0b\x32%.sf.substreams.v1.InitialSnapshotDataH\x00R\x0csnapshotData\x12X\n\x11snapshot_complete\x18\x03 \x01(\x0b\x32).sf.substreams.v1.InitialSnapshotCompleteH\x00R\x10snapshotComplete\x12\x37\n\x04\x64\x61ta\x18\x04 \x01(\x0b\x32!.sf.substreams.v1.BlockScopedDataH\x00R\x04\x64\x61taB\t\n\x07message\"1\n\x17InitialSnapshotComplete\x12\x16\n\x06\x63ursor\x18\x01 \x01(\tR\x06\x63ursor\"\xa9\x01\n\x13InitialSnapshotData\x12\x1f\n\x0bmodule_name\x18\x01 \x01(\tR\nmoduleName\x12\x35\n\x06\x64\x65ltas\x18\x02 \x01(\x0b\x32\x1d.sf.substreams.v1.StoreDeltasR\x06\x64\x65ltas\x12\x1b\n\tsent_keys\x18\x04 \x01(\x04R\x08sentKeys\x12\x1d\n\ntotal_keys\x18\x03 \x01(\x04R\ttotalKeys\"\xc2\x01\n\x0f\x42lockScopedData\x12\x38\n\x07outputs\x18\x01 \x03(\x0b\x32\x1e.sf.substreams.v1.ModuleOutputR\x07outputs\x12-\n\x05\x63lock\x18\x03 \x01(\x0b\x32\x17.sf.substreams.v1.ClockR\x05\x63lock\x12.\n\x04step\x18\x06 \x01(\x0e\x32\x1a.sf.substreams.v1.ForkStepR\x04step\x12\x16\n\x06\x63ursor\x18\n \x01(\tR\x06\x63ursor\"\xe0\x01\n\x0cModuleOutput\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12\x35\n\nmap_output\x18\x02 \x01(\x0b\x32\x14.google.protobuf.AnyH\x00R\tmapOutput\x12\x42\n\x0cstore_deltas\x18\x03 \x01(\x0b\x32\x1d.sf.substreams.v1.StoreDeltasH\x00R\x0bstoreDeltas\x12\x12\n\x04logs\x18\x04 \x03(\tR\x04logs\x12%\n\x0elogs_truncated\x18\x05 \x01(\x08R\rlogsTruncatedB\x06\n\x04\x64\x61ta\"M\n\x0fModulesProgress\x12:\n\x07modules\x18\x01 \x03(\x0b\x32 .sf.substreams.v1.ModuleProgressR\x07modules\"\xdf\x02\n\x0eModuleProgress\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12G\n\x10processed_ranges\x18\x02 \x03(\x0b\x32\x1c.sf.substreams.v1.BlockRangeR\x0fprocessedRanges\x12(\n\x10total_bytes_read\x18\x03 \x01(\x04R\x0etotalBytesRead\x12.\n\x13total_bytes_written\x18\x04 \x01(\x04R\x11totalBytesWritten\x12\x16\n\x06\x66\x61iled\x18\x07 \x01(\x08R\x06\x66\x61iled\x12%\n\x0e\x66\x61ilure_reason\x18\x08 \x01(\tR\rfailureReason\x12!\n\x0c\x66\x61ilure_logs\x18\t \x03(\tR\x0b\x66\x61ilureLogs\x12\x34\n\x16\x66\x61ilure_logs_truncated\x18\n \x01(\x08R\x14\x66\x61ilureLogsTruncated\"J\n\nBlockRange\x12\x1f\n\x0bstart_block\x18\x01 \x01(\x04R\nstartBlock\x12\x1b\n\tend_block\x18\x02 \x01(\x04R\x08\x65ndBlock\"C\n\x0bStoreDeltas\x12\x34\n\x06\x64\x65ltas\x18\x01 \x03(\x0b\x32\x1c.sf.substreams.v1.StoreDeltaR\x06\x64\x65ltas\"\xf4\x01\n\nStoreDelta\x12\x44\n\toperation\x18\x01 \x01(\x0e\x32&.sf.substreams.v1.StoreDelta.OperationR\toperation\x12\x18\n\x07ordinal\x18\x02 \x01(\x04R\x07ordinal\x12\x10\n\x03key\x18\x03 \x01(\tR\x03key\x12\x1b\n\told_value\x18\x04 \x01(\x0cR\x08oldValue\x12\x1b\n\tnew_value\x18\x05 \x01(\x0cR\x08newValue\":\n\tOperation\x12\t\n\x05UNSET\x10\x00\x12\n\n\x06\x43REATE\x10\x01\x12\n\n\x06UPDATE\x10\x02\x12\n\n\x06\x44\x45LETE\x10\x03\"\xa6\x01\n\x06Output\x12\x1b\n\tblock_num\x18\x01 \x01(\x04R\x08\x62lockNum\x12\x19\n\x08\x62lock_id\x18\x02 \x01(\tR\x07\x62lockId\x12\x38\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\ttimestamp\x12*\n\x05value\x18\n \x01(\x0b\x32\x14.google.protobuf.AnyR\x05value*\\\n\x08\x46orkStep\x12\x10\n\x0cSTEP_UNKNOWN\x10\x00\x12\x0c\n\x08STEP_NEW\x10\x01\x12\r\n\tSTEP_UNDO\x10\x02\x12\x15\n\x11STEP_IRREVERSIBLE\x10\x04\"\x04\x08\x03\x10\x03\"\x04\x08\x05\x10\x05\x32K\n\x06Stream\x12\x41\n\x06\x42locks\x12\x19.sf.substreams.v1.Request\x1a\x1a.sf.substreams.v1.Response0\x01\x42\x46ZDgithub.com/streamingfast/substreams/pb/sf/substreams/v1;pbsubstreamsb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,sf_dot_substreams_dot_v1_dot_manifest__pb2.DESCRIPTOR,sf_dot_substreams_dot_v1_dot_clock__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,sf_dot_substreams_dot_v1_dot_modules__pb2.DESCRIPTOR,sf_dot_substreams_dot_v1_dot_clock__pb2.DESCRIPTOR,])
 
 _FORKSTEP = _descriptor.EnumDescriptor(
   name='ForkStep',
@@ -54,8 +54,8 @@ _FORKSTEP = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1920,
-  serialized_end=2012,
+  serialized_start=2545,
+  serialized_end=2637,
 )
 _sym_db.RegisterEnumDescriptor(_FORKSTEP)
 
@@ -91,8 +91,8 @@ _STOREDELTA_OPERATION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1728,
-  serialized_end=1786,
+  serialized_start=2316,
+  serialized_end=2374,
 )
 _sym_db.RegisterEnumDescriptor(_STOREDELTA_OPERATION)
 
@@ -110,56 +110,56 @@ _REQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='startBlockNum', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='start_cursor', full_name='sf.substreams.v1.Request.start_cursor', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='startCursor', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='stop_block_num', full_name='sf.substreams.v1.Request.stop_block_num', index=2,
       number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='stopBlockNum', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fork_steps', full_name='sf.substreams.v1.Request.fork_steps', index=3,
       number=4, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='forkSteps', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='irreversibility_condition', full_name='sf.substreams.v1.Request.irreversibility_condition', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='irreversibilityCondition', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='manifest', full_name='sf.substreams.v1.Request.manifest', index=5,
+      name='modules', full_name='sf.substreams.v1.Request.modules', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='modules', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='output_modules', full_name='sf.substreams.v1.Request.output_modules', index=6,
       number=7, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='outputModules', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='initial_store_snapshot_for_modules', full_name='sf.substreams.v1.Request.initial_store_snapshot_for_modules', index=7,
       number=8, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='initialStoreSnapshotForModules', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -172,8 +172,8 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=179,
-  serialized_end=456,
+  serialized_start=178,
+  serialized_end=588,
 )
 
 
@@ -190,28 +190,28 @@ _RESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='progress', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='snapshot_data', full_name='sf.substreams.v1.Response.snapshot_data', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='snapshotData', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='snapshot_complete', full_name='sf.substreams.v1.Response.snapshot_complete', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='snapshotComplete', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='data', full_name='sf.substreams.v1.Response.data', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='data', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -227,8 +227,8 @@ _RESPONSE = _descriptor.Descriptor(
       name='message', full_name='sf.substreams.v1.Response.message',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=459,
-  serialized_end=722,
+  serialized_start=591,
+  serialized_end=902,
 )
 
 
@@ -245,7 +245,7 @@ _INITIALSNAPSHOTCOMPLETE = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='cursor', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -258,8 +258,8 @@ _INITIALSNAPSHOTCOMPLETE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=724,
-  serialized_end=765,
+  serialized_start=904,
+  serialized_end=953,
 )
 
 
@@ -276,28 +276,28 @@ _INITIALSNAPSHOTDATA = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='moduleName', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='deltas', full_name='sf.substreams.v1.InitialSnapshotData.deltas', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='deltas', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='sent_keys', full_name='sf.substreams.v1.InitialSnapshotData.sent_keys', index=2,
       number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='sentKeys', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='total_keys', full_name='sf.substreams.v1.InitialSnapshotData.total_keys', index=3,
       number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='totalKeys', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -310,8 +310,8 @@ _INITIALSNAPSHOTDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=768,
-  serialized_end=896,
+  serialized_start=956,
+  serialized_end=1125,
 )
 
 
@@ -328,28 +328,28 @@ _BLOCKSCOPEDDATA = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='outputs', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='clock', full_name='sf.substreams.v1.BlockScopedData.clock', index=1,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='clock', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='step', full_name='sf.substreams.v1.BlockScopedData.step', index=2,
       number=6, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='step', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='cursor', full_name='sf.substreams.v1.BlockScopedData.cursor', index=3,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='cursor', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -362,8 +362,8 @@ _BLOCKSCOPEDDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=899,
-  serialized_end=1063,
+  serialized_start=1128,
+  serialized_end=1322,
 )
 
 
@@ -380,28 +380,35 @@ _MODULEOUTPUT = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='name', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='map_output', full_name='sf.substreams.v1.ModuleOutput.map_output', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='mapOutput', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='store_deltas', full_name='sf.substreams.v1.ModuleOutput.store_deltas', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='storeDeltas', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='logs', full_name='sf.substreams.v1.ModuleOutput.logs', index=3,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='logs', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='logs_truncated', full_name='sf.substreams.v1.ModuleOutput.logs_truncated', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='logsTruncated', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -417,8 +424,8 @@ _MODULEOUTPUT = _descriptor.Descriptor(
       name='data', full_name='sf.substreams.v1.ModuleOutput.data',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1066,
-  serialized_end=1215,
+  serialized_start=1325,
+  serialized_end=1549,
 )
 
 
@@ -435,7 +442,7 @@ _MODULESPROGRESS = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='modules', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -448,8 +455,8 @@ _MODULESPROGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1217,
-  serialized_end=1285,
+  serialized_start=1551,
+  serialized_end=1628,
 )
 
 
@@ -466,42 +473,56 @@ _MODULEPROGRESS = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='name', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='processed_ranges', full_name='sf.substreams.v1.ModuleProgress.processed_ranges', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='processedRanges', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='total_bytes_read', full_name='sf.substreams.v1.ModuleProgress.total_bytes_read', index=2,
       number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='totalBytesRead', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='total_bytes_written', full_name='sf.substreams.v1.ModuleProgress.total_bytes_written', index=3,
       number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='totalBytesWritten', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='failed', full_name='sf.substreams.v1.ModuleProgress.failed', index=4,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='failed', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='failure_reason', full_name='sf.substreams.v1.ModuleProgress.failure_reason', index=5,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='failureReason', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='failure_logs', full_name='sf.substreams.v1.ModuleProgress.failure_logs', index=6,
+      number=9, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='failureLogs', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='failure_logs_truncated', full_name='sf.substreams.v1.ModuleProgress.failure_logs_truncated', index=7,
+      number=10, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='failureLogsTruncated', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -514,8 +535,8 @@ _MODULEPROGRESS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1288,
-  serialized_end=1469,
+  serialized_start=1631,
+  serialized_end=1982,
 )
 
 
@@ -532,14 +553,14 @@ _BLOCKRANGE = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='startBlock', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='end_block', full_name='sf.substreams.v1.BlockRange.end_block', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='endBlock', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -552,8 +573,8 @@ _BLOCKRANGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1471,
-  serialized_end=1523,
+  serialized_start=1984,
+  serialized_end=2058,
 )
 
 
@@ -570,7 +591,7 @@ _STOREDELTAS = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='deltas', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -583,8 +604,8 @@ _STOREDELTAS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1525,
-  serialized_end=1584,
+  serialized_start=2060,
+  serialized_end=2127,
 )
 
 
@@ -601,35 +622,35 @@ _STOREDELTA = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='operation', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='ordinal', full_name='sf.substreams.v1.StoreDelta.ordinal', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='ordinal', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='key', full_name='sf.substreams.v1.StoreDelta.key', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='key', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='old_value', full_name='sf.substreams.v1.StoreDelta.old_value', index=3,
       number=4, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='oldValue', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='new_value', full_name='sf.substreams.v1.StoreDelta.new_value', index=4,
       number=5, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='newValue', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -643,8 +664,8 @@ _STOREDELTA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1587,
-  serialized_end=1786,
+  serialized_start=2130,
+  serialized_end=2374,
 )
 
 
@@ -661,28 +682,28 @@ _OUTPUT = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='blockNum', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='block_id', full_name='sf.substreams.v1.Output.block_id', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='blockId', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='sf.substreams.v1.Output.timestamp', index=2,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='timestamp', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='sf.substreams.v1.Output.value', index=3,
       number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, json_name='value', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -695,12 +716,12 @@ _OUTPUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1789,
-  serialized_end=1918,
+  serialized_start=2377,
+  serialized_end=2543,
 )
 
 _REQUEST.fields_by_name['fork_steps'].enum_type = _FORKSTEP
-_REQUEST.fields_by_name['manifest'].message_type = sf_dot_substreams_dot_v1_dot_manifest__pb2._MANIFEST
+_REQUEST.fields_by_name['modules'].message_type = sf_dot_substreams_dot_v1_dot_modules__pb2._MODULES
 _RESPONSE.fields_by_name['progress'].message_type = _MODULESPROGRESS
 _RESPONSE.fields_by_name['snapshot_data'].message_type = _INITIALSNAPSHOTDATA
 _RESPONSE.fields_by_name['snapshot_complete'].message_type = _INITIALSNAPSHOTCOMPLETE
@@ -844,8 +865,8 @@ _STREAM = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=2014,
-  serialized_end=2089,
+  serialized_start=2639,
+  serialized_end=2714,
   methods=[
   _descriptor.MethodDescriptor(
     name='Blocks',

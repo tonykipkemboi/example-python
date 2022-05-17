@@ -9,14 +9,15 @@ import grpc
 
 from sf.substreams.v1 import substreams_pb2_grpc
 from sf.substreams.v1.substreams_pb2 import Request, Response, STEP_IRREVERSIBLE
-from sf.substreams.v1.manifest_pb2 import Manifest
-import sf.ethereum.type.v1.type_pb2 as eth_pb2
+from sf.substreams.v1.package_pb2 import Package
+import codec_eth_pb2 as eth_pb2
 #from google.protobuf.json_format import MessageToJson
 
 jwt_token = os.getenv("SUBSTREAMS_API_TOKEN")
 if not jwt_token: raise Error("set SUBSTREAMS_API_TOKEN")
 endpoint = "bsc-dev.streamingfast.io:443"
-manifest_yaml_pb = "../substreams-playground/pcs-rust/substreams.yaml.pb"
+# Download with: curl -L -O https://github.com/streamingfast/substreams-playground/releases/download/v0.5.0/pcs-v0.5.0.spkg
+package_pb = "./pcs-v0.5.0.spkg"
 output_modules = ["block_to_pairs", "pairs"]
 start_block = 6_810_706
 end_block = 6_810_710
@@ -30,16 +31,17 @@ def substreams_service():
     return substreams_pb2_grpc.StreamStub(channel)
 
 def main():
-    with open(manifest_yaml_pb, 'rb') as f:
-        manifest = Manifest()
-        manifest.ParseFromString(f.read())
+    global pkg
+    with open(package_pb, 'rb') as f:
+        pkg = Package()
+        pkg.ParseFromString(f.read())
 
     service = substreams_service()
     stream = service.Blocks(Request(
         start_block_num=start_block,
         stop_block_num=end_block,
         fork_steps=[STEP_IRREVERSIBLE],
-        manifest=manifest,
+        modules=pkg.modules,
         output_modules=output_modules,
     ))
 

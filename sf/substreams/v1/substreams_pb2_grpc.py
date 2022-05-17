@@ -18,7 +18,7 @@ class StreamStub(object):
         '/sf.substreams.v1.Stream/Blocks',
         request_serializer=sf_dot_substreams_dot_v1_dot_substreams__pb2.Request.SerializeToString,
         response_deserializer=sf_dot_substreams_dot_v1_dot_substreams__pb2.Response.FromString,
-    )
+        )
 
 
 class StreamServicer(object):
