@@ -16,6 +16,11 @@ main() {
   python3 -m venv env
   source env/bin/activate
   pip3 install -r requirements.txt
+
+  # # This is the Windows version of the above
+  # python -m venv env
+  # .\env\Scripts\activate
+  # pip install -r requirements.txt
 }
 
 usage() {
